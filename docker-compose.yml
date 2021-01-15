@@ -1,0 +1,19 @@
+version: "3.4"
+networks:
+  proxynetwork:
+    external: true
+services:
+  www:
+    image: koromerzhin/nodejs:1.1.3-quasar
+    volumes:
+      - ${PWD}/apps:/app
+    networks:
+      - proxynetwork
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.www-quasar.rule=Host(`quasar.lxc`, `www.quasar.lxc`)"
+        - "traefik.http.middlewares.wwwredirectregex.redirectregex.regex=^http://quasar.lxc/(.*)"
+        - "traefik.http.middlewares.wwwredirectregex.redirectregex.replacement=http://www.quasar.lxc/$${1}"
+        - "traefik.http.routers.www-quasar.entrypoints=web"
+        - "traefik.http.services.www-quasar.loadbalancer.server.port=4200"

@@ -13,7 +13,7 @@ services:
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.www-quasar.rule=Host(`quasar.lxc`, `www.quasar.lxc`)"
-        - "traefik.http.middlewares.wwwredirectregex.redirectregex.regex=^http://quasar.lxc/(.*)"
-        - "traefik.http.middlewares.wwwredirectregex.redirectregex.replacement=http://www.quasar.lxc/$${1}"
+        - "traefik.http.middlewares.quasarredirectregex.redirectregex.regex=^http://quasar.lxc/(.*)"
+        - "traefik.http.middlewares.quasarredirectregex.redirectregex.replacement=http://www.quasar.lxc/$${1}"
         - "traefik.http.routers.www-quasar.entrypoints=web"
         - "traefik.http.services.www-quasar.loadbalancer.server.port=4200"

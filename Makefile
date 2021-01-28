@@ -25,10 +25,10 @@ apps/node_modules: apps/package-lock.json
 	cd apps && npm install
 
 package-lock.json: package.json
-	npm install
+	@npm install
 
 node_modules: package-lock.json
-	npm install
+	@npm install
 
 build: ## build
 	cd apps && npm run build
@@ -118,7 +118,7 @@ else
 endif
 
 ssh: ## ssh
-	docker exec -ti $(WWWFULLNAME) /bin/bash
+	@docker exec -ti $(WWWFULLNAME) /bin/bash
 
 inspect: ## inspect
 	@docker service inspect $(WWW)

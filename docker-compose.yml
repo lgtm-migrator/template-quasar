@@ -12,8 +12,7 @@ services:
     deploy:
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.www-quasar.rule=Host(`quasar.lxc`, `www.quasar.lxc`)"
-        - "traefik.http.middlewares.quasarredirectregex.redirectregex.regex=^http://quasar.lxc/(.*)"
-        - "traefik.http.middlewares.quasarredirectregex.redirectregex.replacement=http://www.quasar.lxc/$${1}"
-        - "traefik.http.routers.www-quasar.entrypoints=web"
+        - "traefik.http.routers.quasar.rule=Host(`quasar.traefik.me`)"
+        - "traefik.http.routers.quasar-tls.tls.domains[0].main=quasar.traefik.me"
+        - "traefik.http.routers.quasar-tls.tls.domains[0].sans=quasar-*.traefik.me"
         - "traefik.http.services.www-quasar.loadbalancer.server.port=4200"

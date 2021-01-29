@@ -33,8 +33,7 @@ docker swarm
 
 Hosts:
 
-- 127.0.0.1 quasar.lxc
-- 127.0.0.1 www.quasar.lxc
+- quasar.traefik.me
 
 ## Récupérer les images docker
 

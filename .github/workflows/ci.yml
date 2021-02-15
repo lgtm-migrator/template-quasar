@@ -39,6 +39,6 @@ jobs:
         if: steps.npm-cache2.outputs.cache-hit != 'true'
         run: make apps/node_modules
       - name: Linter README.md
-        run: make linter-readme
+        run: make linter readme
       - name: Launch build
         run: make build

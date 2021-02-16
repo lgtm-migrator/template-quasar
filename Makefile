@@ -1,3 +1,5 @@
+isDocker := $(shell docker info > /dev/null 2>&1 && echo 1)
+
 .DEFAULT_GOAL := help
 STACK         := quasar
 NETWORK       := proxynetwork
@@ -12,9 +14,6 @@ ifneq "$(SUPPORTS_MAKE_ARGS)" ""
   $(eval $(COMMAND_ARGS):;@:)
 endif
 
-%:
-	@:
-
 help:
 	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
 
@@ -27,13 +26,19 @@ apps/node_modules: apps/package-lock.json
 package-lock.json: package.json
 	@npm install
 
+isdocker: ## Docker is launch
+ifeq ($(isDocker), 0)
+	@echo "Docker is not launch"
+	exit 1
+endif
+
 node_modules: package-lock.json
 	@npm install
 
 build: ## build
 	cd apps && npm run build
 
-contributors: ## Contributors
+contributors: node_modules ## Contributors
 ifeq ($(COMMAND_ARGS),add)
 	@npm run contributors add
 else ifeq ($(COMMAND_ARGS),check)
@@ -44,7 +49,7 @@ else
 	@npm run contributors
 endif
 
-docker: ## Scripts docker
+docker: isdocker ## Scripts docker
 ifeq ($(COMMAND_ARGS),create-network)
 	@docker network create --driver=overlay $(NETWORK)
 else ifeq ($(COMMAND_ARGS),deploy)
@@ -67,7 +72,7 @@ else
 	@echo "stop: docker stop"
 endif
 
-logs: ## Scripts logs
+logs: isdocker ## Scripts logs
 ifeq ($(COMMAND_ARGS),stack)
 	@docker service logs -f --tail 100 --raw $(STACK)
 else ifeq ($(COMMAND_ARGS),www)
@@ -81,7 +86,7 @@ else
 	@echo "www: REDIS"
 endif
 
-git: ## Scripts GIT
+git: node_modules ## Scripts GIT
 ifeq ($(COMMAND_ARGS),commit)
 	@npm run commit
 else ifeq ($(COMMAND_ARGS),status)
@@ -103,7 +108,7 @@ endif
 install: node_modules apps/node_modules ## Installation
 	@make docker deploy -i
 
-linter: ## Scripts Linter
+linter: node_modules ## Scripts Linter
 ifeq ($(COMMAND_ARGS),all)
 	@make linter readme -i
 else ifeq ($(COMMAND_ARGS),readme)
@@ -117,11 +122,11 @@ else
 	@echo "readme: linter README.md"
 endif
 
-ssh: ## ssh
+ssh: isdocker ## ssh
 	@docker exec -ti $(WWWFULLNAME) /bin/bash
 
-inspect: ## inspect
+inspect: isdocker ## inspect
 	@docker service inspect $(WWW)
 
-update: ## ssh
+update: isdocker ## ssh
 	@docker service update $(WWW)

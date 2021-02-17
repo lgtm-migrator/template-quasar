@@ -26,6 +26,7 @@ apps/node_modules: apps/package-lock.json
 package-lock.json: package.json
 	@npm install
 
+.PHONY: isdocker
 isdocker: ## Docker is launch
 ifeq ($(isDocker), 0)
 	@echo "Docker is not launch"

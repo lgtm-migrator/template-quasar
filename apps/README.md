@@ -1,4 +1,4 @@
-# Quasar App (test-quasar)
+# Quasar App (apps)
 
 A Quasar Framework app
 
@@ -9,7 +9,7 @@ npm install
 
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
 ```bash
-npm run dev
+quasar dev
 ```
 
 ### Lint the files
@@ -19,7 +19,7 @@ npm run lint
 
 ### Build the app for production
 ```bash
-npm run build
+quasar build
 ```
 
 ### Customize the configuration

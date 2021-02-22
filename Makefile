@@ -36,9 +36,6 @@ endif
 node_modules: package-lock.json
 	@npm install
 
-build: ## build
-	cd apps && npm run build
-
 contributors: node_modules ## Contributors
 ifeq ($(COMMAND_ARGS),add)
 	@npm run contributors add

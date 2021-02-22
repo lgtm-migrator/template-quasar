@@ -40,5 +40,3 @@ jobs:
         run: make apps/node_modules
       - name: Linter README.md
         run: make linter readme
-      - name: Launch build
-        run: make build

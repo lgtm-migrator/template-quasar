@@ -104,6 +104,7 @@ else
 endif
 
 install: node_modules apps/node_modules ## Installation
+	@make docker image-pull -i
 	@make docker deploy -i
 
 linter: node_modules ## Scripts Linter

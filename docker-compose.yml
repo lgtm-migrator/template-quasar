@@ -2,6 +2,9 @@ version: "3.4"
 networks:
   proxynetwork:
     external: true
+  net:
+    driver: overlay
+    attachable: true
 services:
   www:
     image: koromerzhin/nodejs:1.1.3-quasar
@@ -9,6 +12,7 @@ services:
       - ${PWD}/apps:/app
     networks:
       - proxynetwork
+      - net
     deploy:
       labels:
         - "traefik.enable=true"

@@ -5,7 +5,7 @@ STACK         := quasar
 NETWORK       := proxynetwork
 
 WWW           := $(STACK)_www
-WWWFULLNAME   := $(WWW).1.$$(docker service ps -f 'name=$(PRWWWOXY)' $(WWW) -q --no-trunc | head -n1)
+WWWFULLNAME   := $(WWW).1.$$(docker service ps -f 'name=$(WWW)' $(WWW) -q --no-trunc | head -n1)
 
 SUPPORTED_COMMANDS := contributors docker logs git linter
 SUPPORTS_MAKE_ARGS := $(findstring $(firstword $(MAKECMDGOALS)), $(SUPPORTED_COMMANDS))
@@ -78,7 +78,7 @@ else
 	@echo "make logs ARGUMENT"
 	@echo "---"
 	@echo "stack: logs stack"
-	@echo "www: REDIS"
+	@echo "www: WWW"
 endif
 
 git: node_modules ## Scripts GIT

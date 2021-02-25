@@ -6,7 +6,7 @@ NETWORK       := proxynetwork
 
 WWW         := $(STACK)_www
 WWWFULLNAME := $(WWW).1.$$(docker service ps -f 'name=$(WWW)' $(WWW) -q --no-trunc | head -n1)
-WWWRUN      := docker run --rm -v ${PWD}/front:/app koromerzhin/nodejs:1.1.3-quasar
+WWWRUN      := docker run --rm -v ${PWD}/apps:/app koromerzhin/nodejs:1.1.3-quasar
 
 SUPPORTED_COMMANDS := contributors docker logs git linter sleep
 SUPPORTS_MAKE_ARGS := $(findstring $(firstword $(MAKECMDGOALS)), $(SUPPORTED_COMMANDS))

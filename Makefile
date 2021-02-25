@@ -4,8 +4,9 @@ isDocker := $(shell docker info > /dev/null 2>&1 && echo 1)
 STACK         := quasar
 NETWORK       := proxynetwork
 
-WWW           := $(STACK)_www
-WWWFULLNAME   := $(WWW).1.$$(docker service ps -f 'name=$(WWW)' $(WWW) -q --no-trunc | head -n1)
+WWW         := $(STACK)_www
+WWWFULLNAME := $(WWW).1.$$(docker service ps -f 'name=$(WWW)' $(WWW) -q --no-trunc | head -n1)
+WWWRUN      := docker run --rm -v ${PWD}/front:/app koromerzhin/nodejs:1.1.3-quasar
 
 SUPPORTED_COMMANDS := contributors docker logs git linter sleep
 SUPPORTS_MAKE_ARGS := $(findstring $(firstword $(MAKECMDGOALS)), $(SUPPORTED_COMMANDS))
@@ -17,14 +18,8 @@ endif
 help:
 	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
 
-apps/package-lock.json: apps/package.json
-	cd apps && npm install
-
-apps/node_modules: apps/package-lock.json
-	cd apps && npm install
-
-package-lock.json: package.json
-	@npm install
+apps/node_modules:
+	$(WWWRUN) npm install
 
 .PHONY: isdocker
 isdocker: ## Docker is launch
@@ -33,7 +28,7 @@ ifeq ($(isDocker), 0)
 	exit 1
 endif
 
-node_modules: package-lock.json
+node_modules:
 	@npm install
 
 contributors: node_modules ## Contributors

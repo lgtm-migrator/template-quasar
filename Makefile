@@ -1,6 +1,6 @@
 include make/general/Makefile
 STACK         := quasar
-NETWORK       := proxynetwork
+NETWORK       := proxylampy
 include make/docker/Makefile
 
 SUPPORTED_COMMANDS := linter

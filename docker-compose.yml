@@ -27,6 +27,4 @@ services:
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.quasar.rule=HostRegexp(`quasar.traefik.me`, `quasar.{ip:.*}.traefik.me`)"
-        - "traefik.http.routers.quasar-tls.tls.domains[0].main=quasar.traefik.me"
-        - "traefik.http.routers.quasar-tls.tls.domains[0].sans=quasar-*.traefik.me"
         - "traefik.http.services.quasar.loadbalancer.server.port=80"

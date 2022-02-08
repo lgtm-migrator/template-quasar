@@ -10,7 +10,7 @@ services:
     image: node:15.14.0
     working_dir: /app
     command: >
-      sh -c "npm install -g @quasar/cli@1.2.2 && npm install && quasar dev"
+      sh -c "npm install -g @quasar/cli@1.2.2 && npm install && npm run start"
     volumes:
       - ${PWD}/apps:/app
     networks:

@@ -6,6 +6,8 @@
   "author": "koromerzhin <308012+koromerzhin@users.noreply.github.com>",
   "private": true,
   "scripts": {
+    "start": "quasar dev",
+    "build": "quasar build",
     "lint": "eslint --ext .js,.vue ./",
     "test": "echo \"No test specified\" && exit 0"
   },

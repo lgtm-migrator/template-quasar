@@ -30,6 +30,14 @@ Hosts:
 
 - quasar.traefik.me
 
+## Download
+
+```sh
+git clone git@github.com:koromerzhin/template-quasar.git template-quasar
+cd template-quasar
+git submodule update --init
+```
+
 ## Install
 
 ``` sh
